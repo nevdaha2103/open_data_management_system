@@ -213,8 +213,13 @@ ABAC (Attribute-Based Access Control) - модель контролю досту
 *[Розділ містить повний список всіх документів, про які згадується.]*
 
 https://medium.com/geekculture/web-scraping-101-tools-techniques-and-best-practices-417e377fbeaf
+
 https://aws.amazon.com/what-is/api/
+
 https://ua.talend.com/resources/what-is-data-processing/
+
 https://www.digitalguardian.com/blog/what-role-based-access-control-rbac-examples-benefits-and-more
+
 https://www.techtarget.com/searchsecurity/definition/role-based-access-control-RBAC
+
 https://www.okta.com/blog/2020/09/attribute-based-access-control-abac/
