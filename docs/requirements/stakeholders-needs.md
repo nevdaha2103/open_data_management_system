@@ -57,7 +57,7 @@
 ## Короткий зміст
 
 1. [Характеристика ділових процесів](#business-processes)
-   - [Create user account](#CreateUserAccount)
+   - [Додавання даних адміністраторів](#AddAdminData)
    - [Change user data](#ChangeUserData)
    - [Remove user account](#RemoveUserAccount)
    - [Create survey](#CreateSurvey)
@@ -76,9 +76,9 @@
 7. [Експлуатаційна придатність](#supportability)
 
 ## Характеристика ділових процесів <a id="business-processes"></a> 
-| ID |	<span id="AddAdminData">AddAdminData</span>|
-| НАЗВА |	Додавання даних адміністраторів|
-| УЧАСНИКИ |	Адміністратор, Система|
+| ID |	<span id="AddAdminData">AddAdminData</span> |
+| НАЗВА |	Додавання даних адміністраторів |
+| УЧАСНИКИ |	Адміністратор, Система |
 | ПЕРЕДУМОВИ |	Користувач авторизований як адміністратор. |
 | РЕЗУЛЬТАТ |	Нові дані адміністраторів додані до системи. |
 | ВИКЛЮЧНІ СИТУАЦІЇ |	Неправильно введені обов'язкові дані.<br/> Недостатньо прав для додавання даних. |
