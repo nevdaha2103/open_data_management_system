@@ -19,6 +19,9 @@ footer: "ECL 2.0 Licensed | Copyright © [YYYY] [Your Name]"
 
 студент 2-го курсу, групи ІМ-34 Сюсюков Володимир (tg: @vova_siusiuk0v)
 
+студент 2-го курсу, групи ІМ-34 Сафронов Михайло (tg: @Mikhailo_Safronov)
+
+
 **Керівник**
 
 *доцент кафедри ОТ ФІОТ, к.т.н., доцент*<span padding-right:5em></span> **Андрій БОЛДАК** 
