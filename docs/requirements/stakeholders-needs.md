@@ -57,7 +57,7 @@
 ## Короткий зміст
 
 1. [Характеристика ділових процесів](#business-processes)
-   - [Додавання даних адміністраторів](#AddAdminData)
+   - [Додавання даних адміністраторів](#AddNewAdmin)
    - [Реєстрація адміністратора](#RegisterAdmin)
    - [Перегляд даних користувачами без реєстрації](#ViewDataWithoutRegistration)
    - [Видалення даних адміністратора](#RemoveAdminData)
@@ -72,7 +72,7 @@
 7. [Експлуатаційна придатність](#supportability)
 
 ## Характеристика ділових процесів <a id="business-processes"></a> 
-| ID |	<span id="AddAdminData">AddAdminData</span> |
+| ID |	<span id="AddNewAdmin">AddNewAdmin</span> |
 | :------------- | :------------- |
 | НАЗВА |	Додавання даних адміністраторів |
 | УЧАСНИКИ |	Адміністратор, Система |
