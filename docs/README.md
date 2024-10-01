@@ -19,6 +19,8 @@ footer: "ECL 2.0 Licensed | Copyright © [2024] [Andriy Ashomka]"
 
 студент 2-го курсу, групи ІМ-34 Сафронов Михайло (tg: @Mikhailo_Safronov)
 
+студент 2-го курсу, групи ІМ-34 Якимець Валерій (tg: @аrrellav)
+
 
 **Керівник**
 
