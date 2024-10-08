@@ -1,4 +1,115 @@
-# Модель прецедентів
+# Розроблення функціональних вимог до системи
+
+## Модель прецедентів
+
+### 1. Загальна схема
+
+```plantuml
+@startuml
+
+    actor "Guest" as Guest
+    actor "Admin" as Admin
+    actor "Super Admin" as SuperAdmin
+
+    usecase "<b>Register</b>\nРеєстрація користувача" as UC_1
+    usecase "<b>Login</b>\nВхід до системи" as UC_2
+    usecase "<b>View Data Without Registration</b>\nПерегляд даних без реєстрації" as UC_3
+    usecase "<b>Add Data</b>\nДодавання даних" as UC_4
+    usecase "<b>Edit Data</b>\nРедагування даних" as UC_5
+    usecase "<b>Remove Data</b>\nВидалення даних" as UC_6
+    usecase "<b>Admin Activity Reports</b>\nЗвіти про активність адміністраторів" as UC_7
+    usecase "<b>Register Admin</b>\nРеєстрація адміністратора" as UC_9
+    usecase "<b>Remove Admin Data</b>\nВидалення даних адміністратора" as UC_10
+
+    ' Категорії прав Super Admin
+    usecase "<b>Shared Admin Rights</b>\nПрава, доступні всім адміністраторам" as CAT_1
+    usecase "<b>Exclusive Super Admin Rights</b>\nПрава, доступні лише головному адміністратору" as CAT_2
+
+    ' Права, доступні всім адміністраторам
+    CAT_1 -l-> UC_4
+    CAT_1 -d-> UC_5
+    CAT_1 -d-> UC_6
+    CAT_1 -d-> UC_7
+
+    ' Права, доступні лише Super Admin
+    CAT_2 -u-> UC_9
+    CAT_2 -d-> UC_10
+
+    Guest -u-> UC_1
+    Guest -u-> UC_2
+    Guest -u-> UC_3
+
+    SuperAdmin -u-|> Admin
+    Admin -l-|> Guest
+    SuperAdmin -d-> CAT_2
+    SuperAdmin -d-> CAT_1
+    Admin -d-> CAT_1
+
+@enduml
+```
+
+### 2. Схема взаємодії гостя
+
+```plantuml
+@startuml
+
+    actor "Guest" as Guest
+
+    usecase "<b>Register</b>\nРеєстрація користувача" as UC_1
+    usecase "<b>Login</b>\nВхід до системи" as UC_2
+    usecase "<b>View Data Without Registration</b>\nПерегляд даних без реєстрації" as UC_3
+
+    Guest -u-> UC_1
+    Guest -u-> UC_2
+    Guest -u-> UC_3
+
+@enduml
+```
+
+### 3. Схема взаємодії адміністраторів
+
+```plantuml
+@startuml
+
+    actor "Admin" as Admin
+
+    usecase "<b>Add Data</b>\nДодавання даних" as UC_4
+    usecase "<b>Edit Data</b>\nРедагування даних" as UC_5
+    usecase "<b>Remove Data</b>\nВидалення даних" as UC_6
+    usecase "<b>Admin Activity Reports</b>\nЗвіти про активність адміністраторів" as UC_7
+
+    Admin -u-> UC_4
+    Admin -d-> UC_5
+    Admin -d-> UC_6
+    Admin -u-> UC_7
+
+@enduml
+```
+
+### 4. Схема взаємодії суперадміністратора
+
+```plantuml
+@startuml
+
+    actor "Super Admin" as SuperAdmin
+    usecase "<b>Add Data</b>\nДодавання даних" as UC_4
+    usecase "<b>Edit Data</b>\nРедагування даних" as UC_5
+    usecase "<b>Remove Data</b>\nВидалення даних" as UC_6
+    usecase "<b>Admin Activity Reports</b>\nЗвіти про активність адміністраторів" as UC_7
+    usecase "<b>Register Admin</b>\nРеєстрація адміністратора" as UC_9
+    usecase "<b>Remove Admin Data</b>\nВидалення даних адміністратора" as UC_10
+
+    SuperAdmin -u-> UC_4
+    SuperAdmin -d-> UC_5
+    SuperAdmin -d-> UC_6
+    SuperAdmin -d-> UC_7
+    SuperAdmin -u-> UC_9
+    SuperAdmin -u-> UC_10
+
+@enduml
+
+```
+
 
 ### 1. Сценарій RegisterAdmin
 
