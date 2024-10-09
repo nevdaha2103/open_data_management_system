@@ -4,7 +4,6 @@
 
 ### 1. Загальна схема
 
-```plantuml
 @startuml
 
     actor "Guest" as Guest
@@ -46,11 +45,9 @@
     Admin -d-> CAT_1
 
 @enduml
-```
 
 ### 2. Схема взаємодії гостя
 
-```plantuml
 @startuml
 
     actor "Guest" as Guest
@@ -64,11 +61,9 @@
     Guest -u-> UC_3
 
 @enduml
-```
 
 ### 3. Схема взаємодії адміністраторів
 
-```plantuml
 @startuml
 
     actor "Admin" as Admin
@@ -84,11 +79,9 @@
     Admin -u-> UC_7
 
 @enduml
-```
 
 ### 4. Схема взаємодії суперадміністратора
 
-```plantuml
 @startuml
 
     actor "Super Admin" as SuperAdmin
@@ -107,8 +100,6 @@
     SuperAdmin -u-> UC_10
 
 @enduml
-
-```
 
 
 ### 1. Сценарій RegisterAdmin
