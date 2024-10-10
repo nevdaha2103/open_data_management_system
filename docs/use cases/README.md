@@ -41,7 +41,6 @@
     SuperAdmin -u-|> Admin
     Admin -l-|> Guest
     SuperAdmin -d-> CAT_2
-    SuperAdmin -d-> CAT_1
     Admin -d-> CAT_1
 
 @enduml
