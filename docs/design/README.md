@@ -6,6 +6,7 @@
 - реляційна схема
   
 -ER-модель
+```plantuml
 @startuml
 entity User  {
 	id: UUID
@@ -135,3 +136,4 @@ GuestAccess "0,*" --> "1,1" Data : dataID
 RemovedAdminData "1,1" --> "1,1" User : adminID
 RemovedAdminData "1,1" --> "1,1" Data : dataID
 @enduml
+```
