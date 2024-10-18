@@ -115,7 +115,7 @@ entity RemovedAdminData {
 	dataID: UUID
 	date: DATETIME
 }
-```
+
 User "1,1" --> "0,*" UserAttributes
 User "1,1" --> "0,*" User_has_Search
 User_has_Search "0,*" --> "1,1" Search
