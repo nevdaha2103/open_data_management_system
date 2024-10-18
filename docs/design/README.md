@@ -6,7 +6,6 @@
 - реляційна схема
   
 -ER-модель
-  
 @startuml
 entity User  {
 	id: UUID
