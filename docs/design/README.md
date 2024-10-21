@@ -5,7 +5,7 @@
 - ER-модель
 - реляційна схема
 
-- модель бізнес-об'єктів
+## Модель бізнес-об'єктів
 ```plantuml
 @startuml
 entity User <<ENTITY>> #ffc400
@@ -145,7 +145,7 @@ DataLink "1" -r- "0" DataLink_has_Data
 DataLink_has_Data "0" -r- "1" Data
 @enduml
 ```
--ER-модель
+## ER-модель
 ```plantuml
 @startuml
 entity User  {
