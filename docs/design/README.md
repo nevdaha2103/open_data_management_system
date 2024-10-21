@@ -6,7 +6,6 @@
 - реляційна схема
 
 ## Модель бізнес-об'єктів
-```plantuml
 @startuml
 entity User <<ENTITY>> #ffc400
 entity User.password <<TEXT>> #ffbdfe
@@ -146,7 +145,6 @@ DataLink_has_Data "0" -r- "1" Data
 @enduml
 ```
 ## ER-модель
-```plantuml
 @startuml
 entity User  {
 	id: UUID
