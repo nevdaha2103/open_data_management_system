@@ -277,3 +277,5 @@
 	RemovedAdminData "1,1" --> "1,1" Data : dataID
 @enduml
 
+## Реляційна схема
+![diagram](https://github.com/user-attachments/assets/0dea964b-b04c-4c1f-8220-3f0de2faa4a1)
