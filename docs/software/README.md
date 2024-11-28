@@ -3,157 +3,378 @@
 ## SQL-скрипт для створення та початкового наповнення бази даних
 
 ```sql
-  CREATE DATABASE lab5;
-USE lab5;
+  -- MySQL Workbench Forward Engineering
 
--- Таблица User
-CREATE TABLE User (
-    id CHAR(36) PRIMARY KEY, -- Хранение UUID
-    password TEXT NOT NULL,
-    username VARCHAR(100) UNIQUE NOT NULL, -- Указана длина для UNIQUE
-    email VARCHAR(100) UNIQUE NOT NULL,   -- Указана длина для UNIQUE
-    role VARCHAR(50) NOT NULL
-);
+SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
+SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
 
--- Таблица Attributes
-CREATE TABLE Attributes (
-    id CHAR(36) PRIMARY KEY,
-    description TEXT,
-    value TEXT,
-    attributeType VARCHAR(50),
-    name VARCHAR(100)
-);
+-- -----------------------------------------------------
+-- Schema mydb
+-- -----------------------------------------------------
+DROP SCHEMA IF EXISTS mydb ;
 
--- Таблица Permissions
-CREATE TABLE Permissions (
-    id CHAR(36) PRIMARY KEY,
-    description TEXT,
-    level INT,
-    name VARCHAR(100)
-);
+-- -----------------------------------------------------
+-- Schema mydb
+-- -----------------------------------------------------
+CREATE SCHEMA IF NOT EXISTS mydb ;
+USE mydb ;
 
--- Таблица UserAttributes
-CREATE TABLE UserAttributes (
-    UserID CHAR(36),
-    AttributeID CHAR(36),
-    PRIMARY KEY (UserID, AttributeID),
-    FOREIGN KEY (UserID) REFERENCES User(id) ON DELETE CASCADE,
-    FOREIGN KEY (AttributeID) REFERENCES Attributes(id) ON DELETE CASCADE
-);
+-- -----------------------------------------------------
+-- Table mydb.User
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS mydb.User ;
 
--- Таблица Search
-CREATE TABLE Search (
-    id CHAR(36) PRIMARY KEY,
-    status VARCHAR(50),
-    searchType VARCHAR(50),
-    target TEXT,
-    parameters TEXT
-);
+CREATE TABLE IF NOT EXISTS mydb.User (
+  id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  name VARCHAR(32) NOT NULL,
+  password VARCHAR(255) NOT NULL,
+  email VARCHAR(32) NOT NULL,
+  account_creation_date DATETIME NOT NULL,
+  last_login_date DATETIME NULL DEFAULT NULL,
+  Role_id INT UNSIGNED NOT NULL,
+  PRIMARY KEY (`id`, `Role_id`),
+  UNIQUE INDEX email_UNIQUE (`email` ASC) VISIBLE,
+  INDEX fk_User_Role_idx (`Role_id` ASC) VISIBLE,
+  CONSTRAINT fk_User_Role
+    FOREIGN KEY (`Role_id`)
+    REFERENCES mydb.Role (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE CASCADE)
+ENGINE = InnoDB;
 
--- Таблица User_has_Search
-CREATE TABLE User_has_Search (
-    User_id CHAR(36),
-    Search_id CHAR(36),
-    PRIMARY KEY (User_id, Search_id),
-    FOREIGN KEY (User_id) REFERENCES User(id) ON DELETE CASCADE,
-    FOREIGN KEY (Search_id) REFERENCES Search(id) ON DELETE CASCADE
-);
 
--- Таблица DataLink
-CREATE TABLE DataLink (
-    link VARCHAR(255) PRIMARY KEY
-);
+-- -----------------------------------------------------
+-- Table mydb.Session
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS mydb.Session ;
 
--- Таблица Search_has_DataLink
-CREATE TABLE Search_has_DataLink (
-    Search_id CHAR(36),
-    DataLink_link VARCHAR(255),
-    PRIMARY KEY (Search_id, DataLink_link),
-    FOREIGN KEY (Search_id) REFERENCES Search(id) ON DELETE CASCADE,
-    FOREIGN KEY (DataLink_link) REFERENCES DataLink(link) ON DELETE CASCADE
-);
+CREATE TABLE IF NOT EXISTS mydb.Session (
+  id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  login_time DATETIME NOT NULL,
+  logout_time DATETIME NOT NULL,
+  User_id INT UNSIGNED NOT NULL,
+  PRIMARY KEY (`id`, `User_id`),
+  INDEX fk_Session_User1_idx (`User_id` ASC) VISIBLE,
+  CONSTRAINT fk_Session_User1
+    FOREIGN KEY (`User_id`)
+    REFERENCES mydb.User (`id`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
+ENGINE = InnoDB;
 
--- Таблица DataFolder
-CREATE TABLE DataFolder (
-    id CHAR(36) PRIMARY KEY,
-    description TEXT,
-    date DATETIME,
-    owner VARCHAR(100),
-    name VARCHAR(100)
-);
 
--- Таблица DataFolder_has_DataLink
-CREATE TABLE DataFolder_has_DataLink (
-    DataFolder_id CHAR(36),
-    DataLink_link VARCHAR(255),
-    PRIMARY KEY (DataFolder_id, DataLink_link),
-    FOREIGN KEY (DataFolder_id) REFERENCES DataFolder(id) ON DELETE CASCADE,
-    FOREIGN KEY (DataLink_link) REFERENCES DataLink(link) ON DELETE CASCADE
-);
+-- -----------------------------------------------------
+-- Table mydb.Role
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS mydb.Role ;
 
--- Таблица Data
-CREATE TABLE Data (
-    id CHAR(36) PRIMARY KEY,
-    size DOUBLE,
-    date DATETIME,
-    dataType VARCHAR(50),
-    name VARCHAR(100),
-    description TEXT,
-    tags TEXT,
-    createdBy CHAR(36),
-    FOREIGN KEY (createdBy) REFERENCES User(id) ON DELETE SET NULL
-);
+CREATE TABLE IF NOT EXISTS mydb.Role (
+  id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  name VARCHAR(32) NOT NULL,
+  description VARCHAR(255) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX name_UNIQUE (`name` ASC) VISIBLE)
+ENGINE = InnoDB;
 
--- Таблица DataLink_has_Data
-CREATE TABLE DataLink_has_Data (
-    Data_id CHAR(36),
-    DataLink_link VARCHAR(255),
-    PRIMARY KEY (Data_id, DataLink_link),
-    FOREIGN KEY (Data_id) REFERENCES Data(id) ON DELETE CASCADE,
-    FOREIGN KEY (DataLink_link) REFERENCES DataLink(link) ON DELETE CASCADE
-);
 
--- Таблица AdminActivityReports
-CREATE TABLE AdminActivityReports (
-    id CHAR(36) PRIMARY KEY,
-    adminID CHAR(36),
-    activity TEXT,
-    date DATETIME,
-    FOREIGN KEY (adminID) REFERENCES User(id) ON DELETE CASCADE
-);
+-- -----------------------------------------------------
+-- Table mydb.Category
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS mydb.Category ;
 
--- Таблица AdminRegistration
-CREATE TABLE AdminRegistration (
-    id CHAR(36) PRIMARY KEY,
-    adminID CHAR(36),
-    registeredBy CHAR(36),
-    date DATETIME,
-    FOREIGN KEY (adminID) REFERENCES User(id) ON DELETE CASCADE,
-    FOREIGN KEY (registeredBy) REFERENCES User(id) ON DELETE SET NULL
-);
+CREATE TABLE IF NOT EXISTS mydb.Category (
+  id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  name VARCHAR(32) NOT NULL,
+  description VARCHAR(255) NULL DEFAULT NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB;
 
--- Таблица GuestAccess
-CREATE TABLE GuestAccess (
-    id CHAR(36) PRIMARY KEY,
-    dataID CHAR(36),
-    accessDate DATETIME,
-    guestID CHAR(36),
-    FOREIGN KEY (dataID) REFERENCES Data(id) ON DELETE CASCADE
-);
 
--- Таблица RemovedAdminData
-CREATE TABLE RemovedAdminData (
-    id CHAR(36) PRIMARY KEY,
-    adminID CHAR(36),
-    removedBy CHAR(36),
-    dataID CHAR(36),
-    date DATETIME,
-    FOREIGN KEY (adminID) REFERENCES User(id) ON DELETE CASCADE,
-    FOREIGN KEY (removedBy) REFERENCES User(id) ON DELETE SET NULL,
-    FOREIGN KEY (dataID) REFERENCES Data(id) ON DELETE CASCADE
-);
+-- -----------------------------------------------------
+-- Table mydb.Permission
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS mydb.Permission ;
+
+CREATE TABLE IF NOT EXISTS mydb.Permission (
+  id INT NOT NULL AUTO_INCREMENT,
+  name VARCHAR(32) NOT NULL,
+  description VARCHAR(255) NULL DEFAULT NULL,
+  Role_id INT UNSIGNED NOT NULL,
+  PRIMARY KEY (`id`, `Role_id`),
+  INDEX fk_Permission_Role1_idx (`Role_id` ASC) VISIBLE,
+  CONSTRAINT fk_Permission_Role1
+    FOREIGN KEY (`Role_id`)
+    REFERENCES mydb.Role (`id`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table mydb.Data
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS mydb.Data ;
+
+CREATE TABLE IF NOT EXISTS mydb.Data (
+  id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  name VARCHAR(32) NOT NULL,
+  contents VARCHAR(255) NOT NULL,
+  upload_date DATETIME NOT NULL,
+  last_edit_date DATETIME NULL DEFAULT NULL,
+  Category_id INT UNSIGNED NOT NULL,
+  PRIMARY KEY (`id`, `Category_id`),
+  UNIQUE INDEX name_UNIQUE (`name` ASC) VISIBLE,
+  INDEX fk_Data_Category1_idx (`Category_id` ASC) VISIBLE,
+  CONSTRAINT fk_Data_Category1
+    FOREIGN KEY (`Category_id`)
+    REFERENCES mydb.Category (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE CASCADE)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table mydb.Comment
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS mydb.Comment ;
+
+CREATE TABLE IF NOT EXISTS mydb.Comment (
+  id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  contents VARCHAR(255) NOT NULL,
+  creation_date DATETIME NOT NULL,
+  User_id INT UNSIGNED NOT NULL,
+  Data_id INT UNSIGNED NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX fk_Comment_User1_idx (`User_id` ASC) VISIBLE,
+  INDEX fk_Comment_Data1_idx (`Data_id` ASC) VISIBLE,
+  CONSTRAINT fk_Comment_User1
+    FOREIGN KEY (`User_id`)
+    REFERENCES mydb.User (`id`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+  CONSTRAINT fk_Comment_Data1
+    FOREIGN KEY (`Data_id`)
+    REFERENCES mydb.Data (`id`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table mydb.Access
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS mydb.Access ;
+
+CREATE TABLE IF NOT EXISTS mydb.Access (
+  id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  access_type VARCHAR(32) NOT NULL,
+  User_id INT UNSIGNED NOT NULL,
+  Data_id INT UNSIGNED NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX fk_Access_User1_idx (`User_id` ASC) VISIBLE,
+  INDEX fk_Access_Data1_idx (`Data_id` ASC) VISIBLE,
+  CONSTRAINT fk_Access_User1
+    FOREIGN KEY (`User_id`)
+    REFERENCES mydb.User (`id`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+  CONSTRAINT fk_Access_Data1
+    FOREIGN KEY (`Data_id`)
+    REFERENCES mydb.Data (`id`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
+ENGINE = InnoDB;
+
+
+SET SQL_MODE=@OLD_SQL_MODE;
+SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
+-- Заповнення таблиці Role
+INSERT INTO mydb.Role (`name`, `description`) VALUES('Admin', 'Administrator with full permissions'), ('Editor', 'User who can edit content'),('Viewer', 'User who can view content only');
+
+-- Заповнення таблиці User
+INSERT INTO mydb.User (`name`, password, email, account_creation_date, last_login_date, `Role_id`) VALUES ('Alice', 'password1', 'alice@example.com', '2024-11-01 10:00:00', '2024-11-26 14:00:00', 1),('Bob', 'password2', 'bob@example.com', '2024-11-02 11:00:00', NULL, 2), ('Charlie', 'password3', 'charlie@example.com', '2024-11-03 12:00:00', '2024-11-25 16:00:00', 3);
+
+-- Заповнення таблиці Category
+INSERT INTO mydb.Category (`name`, `description`) VALUES ('Technology', 'Articles about technology'), ('Science', 'Articles about science'),('History', 'Articles about history');
+
+-- Заповнення таблиці Data
+INSERT INTO mydb.Data (`name`, contents, upload_date, last_edit_date, `Category_id`) VALUES ('AI Basics', 'Introduction to Artificial Intelligence', '2024-11-10 10:00:00', NULL, 1),('Quantum Mechanics', 'Basics of quantum mechanics', '2024-11-12 11:30:00', '2024-11-15 14:00:00', 2), ('World War II', 'History of World War II', '2024-11-14 12:00:00', NULL, 3);
+
+-- Заповнення таблиці CommentINSERT INTO mydb.Comment (`contents`, creation_date, User_id, `Data_id`) VALUES ('Great article!', '2024-11-16 13:00:00', 2, 1), ('Needs more details.', '2024-11-17 15:00:00', 3, 2),('Very informative.', '2024-11-18 16:30:00', 1, 3);
+
+-- Заповнення таблиці Permission
+INSERT INTO mydb.Permission (`name`, description, `Role_id`) VALUES ('Edit Data', 'Can edit content', 2),('View Data', 'Can view content only', 3), ('Manage Users', 'Can manage user accounts', 1);
+
+-- Заповнення таблиці Session
+INSERT INTO mydb.Session (`login_time`, logout_time, `User_id`) VALUES('2024-11-26 10:00:00', '2024-11-26 12:00:00', 1), ('2024-11-26 13:00:00', '2024-11-26 15:00:00', 2);
+
+-- Заповнення таблиці Access
+INSERT INTO mydb.Access (`access_type`, User_id, `Data_id`) VALUES ('Read', 3, 1), ('Write', 2, 2), ('Admin', 1, 3);
 
 ```
 
 ## RESTfull сервіс для управління даними
 
+**main.py**
+```python
+from fastapi import FastAPI
+from database import engine, Base
+from route import router
+
+Base.metadata.create_all(bind=engine)
+
+app = FastAPI()
+
+app.include_router(router)
+```
+
+**database.py**
+```python
+from sqlalchemy import create_engine
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import sessionmaker
+
+SQLALCHEMY_DATABASE_URL = f"mysql+pymysql://root:password@127.0.0.1:3306/mydb"
+
+engine = create_engine(SQLALCHEMY_DATABASE_URL)
+SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+Base = declarative_base()
+```
+
+**datamodel.py**
+```python
+from sqlalchemy import Column, Integer, String, DateTime, ForeignKey
+from database import Base
+from datetime import datetime, timezone, timedelta
+
+
+class Data(Base):
+    __tablename__ = 'Data'
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    name = Column(String, index=True, unique=True)
+    contents = Column(String)
+    upload_date = Column(DateTime, default=lambda: datetime.now(timezone.utc) + timedelta(hours=2))
+    last_edit_date = Column(DateTime, nullable=True)
+    category_id = Column(Integer, ForeignKey('Category.id'))
+```
+
+**schema.py**
+```python
+from pydantic import BaseModel
+from typing import Optional
+from datetime import datetime
+
+
+class DataCreate(BaseModel):
+    id: Optional[int] = None
+    name: str
+    contents: str
+    upload_date: Optional[datetime] = None
+    last_edit_date: Optional[datetime] = None
+    category_id: int
+
+
+class DataResponse(DataCreate):
+    class Config:
+        from_attributes = True
+
+
+class DataPatch(BaseModel):
+    id: int = None
+    name: str = None
+    contents: str = None
+    upload_date: datetime = None
+    last_edit_date: Optional[datetime] = None
+    category_id: int = None
+```
+
+**route.py**
+```python
+from fastapi import APIRouter, Depends, HTTPException
+from sqlalchemy.orm import Session
+from typing import List
+from datamodel import Data
+from schema import DataCreate, DataResponse, DataPatch
+from database import SessionLocal
+
+router = APIRouter()
+
+
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
+
+
+@router.get("/data/", response_model=List[DataResponse])
+async def read_data(db: Session = Depends(get_db)):
+    return db.query(Data).all()
+
+
+@router.get("/data/{data_id}", response_model=DataResponse)
+async def read_data_by_id(data_id: int, db: Session = Depends(get_db)):
+    db_data = db.query(Data).filter(Data.id == data_id).first()
+    if db_data is None:
+        raise HTTPException(status_code=404, detail="The data with the specified ID was not found")
+    return db_data
+
+
+@router.post("/data/", response_model=DataResponse)
+async def create_data(data: DataCreate, db: Session = Depends(get_db)):
+    if db.query(Data).filter(Data.name == data.name).first():
+        raise HTTPException(status_code=400, detail="The data with this name already exists")
+
+    db_data = Data(**data.dict())
+    db.add(db_data)
+    db.commit()
+    db.refresh(db_data)
+    return db_data
+
+
+@router.put("/data/{data_id}", response_model=DataResponse)
+async def update_data(data_id: int, data: DataCreate, db: Session = Depends(get_db)):
+    db_data = db.query(Data).filter(Data.id == data_id).first()
+    if not db_data:
+        raise HTTPException(status_code=404, detail="The data with the specified ID was not found")
+
+    if db.query(Data).filter(Data.name == data.name, Data.id != data_id).first():
+        raise HTTPException(status_code=400, detail="The data with this name already exists")
+
+    for key, value in data.dict().items():
+        setattr(db_data, key, value)
+
+    db.commit()
+    db.refresh(db_data)
+    return db_data
+
+
+@router.delete("/data/{data_id}", response_model=DataResponse)
+async def delete_data(data_id: int, db: Session = Depends(get_db)):
+    db_data = db.query(Data).filter(Data.id == data_id).first()
+    if not db_data:
+        raise HTTPException(status_code=404, detail="The data with the specified ID was not found")
+
+    db.delete(db_data)
+    db.commit()
+    return db_data
+
+
+@router.patch("/data/{data_id}", response_model=DataResponse)
+async def patch_data(data_id: int, data: DataPatch, db: Session = Depends(get_db)):
+    db_data = db.query(Data).filter(Data.id == data_id).first()
+    if not db_data:
+        raise HTTPException(status_code=404, detail="The data with the specified ID was not found")
+
+    updated_fields = data.dict(exclude_unset=True)
+    for key, value in updated_fields.items():
+        setattr(db_data, key, value)
+
+    db.commit()
+    db.refresh(db_data)
+    return db_data
+```
