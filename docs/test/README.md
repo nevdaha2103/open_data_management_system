@@ -64,24 +64,24 @@
 ### GET
 Немає даних з певним id
 
-![](./Images/.jpg)
+![](./Images/get_exception.jpg)
 
 ### POST
 Введено не всі обов'язкові дані для заповнення
 
-![](./Images/.jpg)
+![](./Images/post_exception.jpg)
 
 ### PUT
 Введено id, з яким дані вже існують у системі
 
-![](./Images/.jpg)
+![](./Images/put_exception.jpg)
 
 ### DELETE
 Немає даних із заданим id
 
-![](./Images/.jpg)
+![](./Images/delete_exception.jpg)
 
 ### PATCH
 Немає даних із заданим id
 
-![](./Images/.jpg)
+![](./Images/patch_exception.jpg)
