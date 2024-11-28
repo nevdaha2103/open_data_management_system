@@ -9,44 +9,56 @@
 ## Сценарій для Data
 ### GET
 Запит на отримання даних
+
 ![](./Images/get_get_data.jpg)
+
 Запит на отримання даних за id
-![](./Images/.jpg)
+
+![](./Images/get_get_data_2.jpg)
 
 ### POST
 Запит на додавання даних з усіма заповненими полями
-![](./Images/.jpg)
+
+![](./Images/post_post_add_with_all_fields.jpg)
 
 Запит на додавання даних без id, last_edit_date та upload_date
-![](./Images/.jpg)
+
+![](./Images/post_post_add_without_some_fileds.jpg)
 
 ### PUT
 Запит на оновлення id, name, content та category
 
 Перед оновленням
-![](./Images/.jpg)
+
+![](./Images/put_get_before_update.jpg)
 
 Після оновлення
-![](./Images/.jpg)
+
+![](./Images/put_put_after_update.jpg)
 
 ### DELETE
 Перевірка даних на існування
-![](./Images/.jpg)
+
+![](./Images/delete_get_existence.jpg)
 
 Запит на видалення даних
-![](./Images/.jpg)
+
+![](./Images/delete_delete.jpg)
 
 Перевірка видалених даних на існування
-![](./Images/.jpg)
+
+![](./Images/delete_get.jpg)
 
 ### PATCH
 Запит на оновлення name
 
 Перед оновленням
-![](./Images/.jpg)
+
+![](./Images/patch_get_before_update.jpg)
 
 Після оновлення
-![](./Images/.jpg)
+
+![](./Images/patch_patch_ufter_update.jpg)
 
 ## Вийнятки для Data
 ### GET
