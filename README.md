@@ -1,69 +1,29 @@
 
-# Шаблон репозиторію для виконання курсової роботи з дисципліни "Бази даних"
+# Репозиторій для виконання лабораторних робіт з дисципліни "Бази даних"
 
-## Як використовувати
-
-В цьому репозиторії знаходиться шаблон для виконання курсової роботи.
-
-Для виконання курсової роботи необхідно зробити ```fork``` цього репозіторію, склонувати вже власний репозіторій та розміщувати документацію у відповідних діректоріях ```./docs```.
-
-В цьому файлі необхідно вказати назву проекту. Коротку загальну характеристику
-проекту, контактні дані виконавця, посилання на репо співвиконавців(за необхідністю).
+Тема проєкту: **"Система управління відкритими даними"**
 
 
-Шаблон публікування курсової роботи підготовлено з використанням [VuePress](https://vuepress.vuejs.org/), та стартера 
-[FriendlyUser/vuepress-theme-cool-starter](https://github.com/FriendlyUser/vuepress-theme-cool-starter).
+# Виконавець
 
-Щоб опублікувати проект у Github Pages, налаштовуємо Github Pages (гілка ```gh-pages```), змінюємо файл ```./publish.sh```
+*студент 2-го курсу, групи ІМ-34*<span padding-right:5em></span> **Сюсюков Володимир** [Telegram](https://t.me/vova_siusiuk0v)
 
-```sh
+# Керівник
+*доцент кафедри ОТ ФІОТ, к.т.н., доцент*<span padding-right:5em></span> **Андрій БОЛДАК** 
 
-#!/usr/bin/env sh
+[НТУУ "КИЇВСЬКИЙ ПОЛІТЕХНІЧНИЙ ІНСТИТУТ імені ІГОРЯ СІКОРСЬКОГО](https://kpi.ua/)
 
-# abort on errors
-set -e
+[Факультет інформатики та обчислювальної техніки](https://fiot.kpi.ua/)
 
-# build
-npm run docs:build
+[Кафедра обчислювальної техніки](https://comsys.kpi.ua/)
 
-# navigate into the build output directory
-cd docs/.vuepress/dist
+Київ
 
-# if you are deploying to a custom domain
-# echo 'www.example.com' > CNAME
-
-git init
-git add -A
-git commit -m 'deploy'
-
-# if you are deploying to https://<USERNAME>.github.io
-# git push -f git@github.com:boldak/<USERNAME>.github.io.git master
-
-# if you are deploying to https://<USERNAME>.github.io/<REPO>
-git push -f https://github.com/<USERNAME>/dis-edu.git master:gh-pages
-
-cd -
-
-```
-
-Потім запускаємо
-
-```bash
-    npm run publish
-```
-
-Для відлагодження документації в локальному режимі запускаємо
-
-```bash
-    npm run docs:dev
-```
-
-Доступ до локально опублікованої версії [http://localhost:3030](http://localhost:3030)
-
-
-## Додаткова інформація
+# Додаткова інформація
 
 - [Теми проєктів](./guidelines/themes.md)
 - [Методичні вказівки](./guidelines/guidelines.md)
+- [Документація vuepress-theme-hope](https://theme-hope.vuejs.press/)
+- [Документація Markdown](https://theme-hope.vuejs.press/cookbook/markdown/)
 
 ***Happy learning! Happy coding!*** 
